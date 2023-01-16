@@ -9,11 +9,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_scan_result.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,7 +52,8 @@ class SeeScanFragment: Fragment(R.layout.fragment_scan_result) {
         }
 
         imageButtonNoSkan.setOnClickListener {
-            ActivityCompat.finishAffinity(requireActivity())
+            findNavController().popBackStack(R.id.buttonFragment, true)
+            findNavController().navigate(R.id.buttonFragment)
         }
 
         imageViewCopyToBuffer.setOnClickListener {

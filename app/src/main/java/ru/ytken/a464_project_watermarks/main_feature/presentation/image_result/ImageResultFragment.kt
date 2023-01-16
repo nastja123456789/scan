@@ -21,15 +21,6 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setFragmentResultListener("fromButtonToImage") {
-                _, bun ->
-            val str = bun.getString("uri")
-            val uri = Uri.parse(
-                str
-            )
-            val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
-            vm.findTextInBitmap(bitmap)
-        }
         setFragmentResultListener("fromCropToImage") {
                 _, bun ->
             val str = bun.getString("uri")

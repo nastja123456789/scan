@@ -1,19 +1,13 @@
 package ru.ytken.a464_project_watermarks
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.ytken.a464_project_watermarks.main_feature.presentation.button_fragment.ButtonFragment
-import ru.ytken.a464_project_watermarks.main_feature.presentation.button_fragment.util.ImportImageContract
 import ru.ytken.a464_project_watermarks.utils.ManifestPermission
 import java.io.File
 
