@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_image_result.*
 import ru.ytken.a464_project_watermarks.R
 import ru.ytken.a464_project_watermarks.main_feature.domain.use_cases.SavedImageFactoryUseCase
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.*
 
 class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
@@ -29,6 +31,12 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
             )
             val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
             vm.findTextInBitmap(bitmap)
+            val fdelete = vm.getFilePath(uri, requireContext())?.let { File(it) }
+            if (fdelete!!.exists()) {
+                if (fdelete.delete()) {
+                } else {
+                }
+            }
         }
         buttonSeeSkan.setOnClickListener {
             vm.setScanImageToInit()

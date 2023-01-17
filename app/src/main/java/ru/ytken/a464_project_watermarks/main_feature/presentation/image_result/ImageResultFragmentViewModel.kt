@@ -1,10 +1,14 @@
 package ru.ytken.a464_project_watermarks.main_feature.presentation.image_result
 
+import android.content.Context
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
+import android.net.Uri
+import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +35,19 @@ class ImageResultFragmentViewModel: ViewModel() {
     val hasText: LiveData<Boolean> = liveHasText
 
     var lineBounds: ArrayList<Int> = ArrayList()
+
+    fun getFilePath(uri: Uri, context: Context): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor? = context!!.contentResolver.query(uri, projection, null, null, null)
+        if (cursor != null) {
+            cursor.moveToFirst()
+            val columnIndex: Int = cursor.getColumnIndex(projection[0])
+            val picturePath: String = cursor.getString(columnIndex) // returns null
+            cursor.close()
+            return picturePath
+        }
+        return null
+    }
 
     fun findTextInBitmap(imageBitmap: Bitmap) {
         liveInitImage.value = imageBitmap

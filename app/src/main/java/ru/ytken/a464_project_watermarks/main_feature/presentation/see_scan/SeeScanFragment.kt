@@ -21,6 +21,7 @@ import ru.ytken.a464_project_watermarks.R
 import ru.ytken.a464_project_watermarks.main_feature.domain.use_cases.SavedImageFactoryUseCase
 import ru.ytken.a464_project_watermarks.main_feature.presentation.see_scan.utils.Watermarks
 import ru.ytken.a464_project_watermarks.main_feature.utils.BitmapExtensions.toGrayscale
+import java.io.File
 
 class SeeScanFragment: Fragment(R.layout.fragment_scan_result) {
     private val vm: SeeScanFragmentViewModel by viewModels {
@@ -40,6 +41,12 @@ class SeeScanFragment: Fragment(R.layout.fragment_scan_result) {
             imageViewSkanned.setImageBitmap(fileWithImage)
             if (fileWithImage != null) {
                 processImage(fileWithImage!!.toGrayscale()!!)
+            }
+            val fdelete = vm.getFilePath(uri, requireContext())?.let { File(it) }
+            if (fdelete!!.exists()) {
+                if (fdelete.delete()) {
+                } else {
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 package ru.ytken.a464_project_watermarks.main_feature.presentation.photo_crop
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -32,6 +33,7 @@ internal class PhotoCropFragment : Fragment(R.layout.fragment_photo_crop) {
             document_scanner.post {
                 document_scanner.setImage(bitmap)
             }
+
             btnImageCrop.setOnClickListener {
                 lifecycleScope.launch {
                     progressBar.isVisible = true
@@ -53,7 +55,6 @@ internal class PhotoCropFragment : Fragment(R.layout.fragment_photo_crop) {
                 }
             }
         }
-
     }
 
     private fun assetToBitmap(file: String): Bitmap =
