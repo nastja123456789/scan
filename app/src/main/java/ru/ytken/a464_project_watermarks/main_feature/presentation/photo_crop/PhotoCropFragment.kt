@@ -1,10 +1,10 @@
 package ru.ytken.a464_project_watermarks.main_feature.presentation.photo_crop
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -33,7 +33,6 @@ internal class PhotoCropFragment : Fragment(R.layout.fragment_photo_crop) {
             document_scanner.post {
                 document_scanner.setImage(bitmap)
             }
-
             btnImageCrop.setOnClickListener {
                 lifecycleScope.launch {
                     progressBar.isVisible = true

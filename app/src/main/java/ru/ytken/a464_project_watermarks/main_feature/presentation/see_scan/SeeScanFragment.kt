@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -82,11 +83,16 @@ class SeeScanFragment: Fragment(R.layout.fragment_scan_result) {
             val watermarkSize = 24
             val resMatrix = ""
             val lineBounds = vm.lineBounds
-
+//            for (i in lineBounds) {
+//                Log.d("$i","iiiii")
+//            }
             try{
                 val lineIntervals = ArrayList<Int>()
                 for (i in 1 until lineBounds.size)
                     lineIntervals.add(lineBounds[i]-lineBounds[i-1])
+                for (i in lineIntervals) {
+                    Log.d("$i","iiiii")
+                }
                 val watermark = Watermarks.getWatermark(lineIntervals)
                 if (watermark != null) {
                     setTextButton(watermark.subSequence(0,watermarkSize).toString())

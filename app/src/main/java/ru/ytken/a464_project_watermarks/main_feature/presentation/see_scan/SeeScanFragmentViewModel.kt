@@ -19,7 +19,7 @@ class SeeScanFragmentViewModel: ViewModel() {
 
     fun getFilePath(uri: Uri, context: Context): String? {
         val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor? = context!!.contentResolver.query(uri, projection, null, null, null)
+        val cursor: Cursor? = context.contentResolver.query(uri, projection, null, null, null)
         if (cursor != null) {
             cursor.moveToFirst()
             val columnIndex: Int = cursor.getColumnIndex(projection[0])

@@ -9,6 +9,7 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +39,7 @@ class ImageResultFragmentViewModel: ViewModel() {
 
     fun getFilePath(uri: Uri, context: Context): String? {
         val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor? = context!!.contentResolver.query(uri, projection, null, null, null)
+        val cursor: Cursor? = context.contentResolver.query(uri, projection, null, null, null)
         if (cursor != null) {
             cursor.moveToFirst()
             val columnIndex: Int = cursor.getColumnIndex(projection[0])
@@ -85,6 +86,7 @@ class ImageResultFragmentViewModel: ViewModel() {
                                             line.boundingBox?.let {
                                                 shapeDrawable.bounds = it
                                                 lineBounds.add(it.centerY())
+                                                Log.d("${it.centerY()} 1111111","${it.centerY()} 1111111")
                                             }
                                             shapeDrawable.draw(canvas)
                                         }

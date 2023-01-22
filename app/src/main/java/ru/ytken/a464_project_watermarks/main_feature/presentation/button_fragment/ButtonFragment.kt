@@ -2,11 +2,12 @@ package ru.ytken.a464_project_watermarks.main_feature.presentation.button_fragme
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.StrictMode
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -28,6 +29,7 @@ class ButtonFragment : Fragment(
     R.layout.fragment_button,
 ) {
     private var photoPath: String?=null
+    var fileUri: Uri ?= null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,21 +40,33 @@ class ButtonFragment : Fragment(
         }
 
         buttonTakePhoto.setOnClickListener {
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (cameraIntent.resolveActivity(context!!.packageManager) != null) {
-                var photoFile: File? = null
-                try {
-                    photoFile = createImageFile()
-                } catch (ex: IOException) {
-                    Log.i("Main", "IOException")
-                }
-                if (photoFile != null) {
-                    val builder = StrictMode.VmPolicy.Builder()
-                    StrictMode.setVmPolicy(builder.build())
-                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
-                    pickPhotoLauncher.launch(cameraIntent)
-                }
-            }
+            val fileName = System.currentTimeMillis().toString() + ".jpg"
+            val values = ContentValues()
+            values.put(MediaStore.Images.Media.TITLE, fileName)
+            fileUri =
+                requireActivity().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+            pickPhotoLauncher.launch(intent)
+//            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            if (cameraIntent.resolveActivity(context!!.packageManager) != null) {
+//                Log.d("cameraIntent","cameraIntent")
+//                var photoFile: File? = null
+//                try {
+//                    photoFile = createImageFile()
+//                    Log.d("photoFile","photoFile")
+//                } catch (ex: IOException) {
+//                    Log.i("Main", "IOException")
+//                }
+//                if (photoFile != null) {
+//                    Log.d("notNull","notNull")
+//                    val builder = StrictMode.VmPolicy.Builder()
+//                    StrictMode.setVmPolicy(builder.build())
+//                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
+//                    pickPhotoLauncher.launch(cameraIntent)
+//                }
+//            }
         }
         galleryImageLauncher = registerForActivityResult(StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -67,7 +81,10 @@ class ButtonFragment : Fragment(
             }
         }
         pickPhotoLauncher = registerForActivityResult(StartActivityForResult()) { result->
+            Log.d("${result.resultCode}","resultCode")
             if (result.resultCode == Activity.RESULT_OK) {
+                photoPath = fileUri?.let { getPath(it) }
+                photoPath = Uri.fromFile(File(photoPath)).toString()
                 setFragmentResult(
                     "fromButtonToCrop",
                     bundleOf("uri" to photoPath)
@@ -79,6 +96,19 @@ class ButtonFragment : Fragment(
         }
     }
 
+
+    private fun getPath(selectedImaeUri: Uri): String? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor? = requireActivity().contentResolver.query(selectedImaeUri, projection, null, null,
+            null)
+        if (cursor != null) {
+            cursor.moveToFirst()
+            val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            return cursor.getString(columnIndex)
+        }
+        return selectedImaeUri.path
+    }
+
     private fun reload() {
         val id = findNavController().currentDestination?.id
         findNavController().popBackStack(id!!,true)
@@ -88,7 +118,7 @@ class ButtonFragment : Fragment(
 @SuppressLint("SimpleDateFormat")
 @Throws(IOException::class)
 private fun createImageFile(): File {
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HH_mm_ss").format(Date())
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
     val imageFileName = "JPEG_" + timeStamp + "_"
     val storageDir = Environment.getExternalStoragePublicDirectory(
         Environment.DIRECTORY_PICTURES

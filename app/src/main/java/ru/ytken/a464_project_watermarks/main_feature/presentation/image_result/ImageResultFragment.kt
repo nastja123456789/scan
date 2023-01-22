@@ -59,7 +59,6 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
                 "arrayList",
                 bundleOf( "array" to arr.toString())
             )
-
             findNavController().navigate(R.id.action_imageResultFragment_to_seeScanFragment)
         }
         progressBarWaitForImage.visibility = View.VISIBLE
