@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_photo_crop.*
 import kotlinx.coroutines.launch
 import ru.ytken.a464_project_watermarks.R
+import ru.ytken.a464_project_watermarks.main_feature.utils.BitmapExtensions.rotateBitmap
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -31,7 +32,7 @@ internal class PhotoCropFragment : Fragment(R.layout.fragment_photo_crop) {
                 progressBar.isVisible = loading
             }
             document_scanner.post {
-                document_scanner.setImage(bitmap)
+                document_scanner.setImage(bitmap.rotateBitmap(90))
             }
             btnImageCrop.setOnClickListener {
                 lifecycleScope.launch {

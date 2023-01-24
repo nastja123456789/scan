@@ -11,6 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_image_result.*
+import kotlinx.android.synthetic.main.fragment_scan_result.*
 import ru.ytken.a464_project_watermarks.R
 import ru.ytken.a464_project_watermarks.main_feature.domain.use_cases.SavedImageFactoryUseCase
 import java.io.ByteArrayOutputStream
@@ -55,6 +56,12 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
                 bundleOf("uri" to uri.toString())
             )
             val arr = vm.lineBounds
+//            for (i in arr) {
+//                vm.intervalLineBounds.add(i)
+//            }
+//            for (i in 0 until vm.intervalLineBounds.size-1){
+//                Log.d("${vm.intervalLineBounds[i+1] - vm.intervalLineBounds[i]}","nonono")
+//            }
             setFragmentResult(
                 "arrayList",
                 bundleOf( "array" to arr.toString())
@@ -68,10 +75,15 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
             imageViewResultImage.visibility = View.VISIBLE
             progressBarWaitForImage.visibility = View.INVISIBLE
             if (vm.hasText.value == false) {
+                imageButtonClose.visibility = View.VISIBLE
                 Toast.makeText(activity, getString(R.string.text_not_found), Toast.LENGTH_SHORT).show()
             } else {
                 buttonSeeSkan.visibility = View.VISIBLE
             }
+        }
+        imageButtonClose.setOnClickListener {
+            findNavController().popBackStack(R.id.buttonFragment, true)
+            findNavController().navigate(R.id.buttonFragment)
         }
     }
 
