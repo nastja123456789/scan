@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.fragment_image_result.*
 import kotlinx.android.synthetic.main.fragment_scan_result.*
 import ru.ytken.a464_project_watermarks.R
 import ru.ytken.a464_project_watermarks.main_feature.domain.use_cases.SavedImageFactoryUseCase
+import ru.ytken.a464_project_watermarks.main_feature.utils.BitmapExtensions.makeImageSharpGaussian
+
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
@@ -31,7 +33,9 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
                 str
             )
             val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
-            vm.findTextInBitmap(bitmap)
+//            val bitmapp = makeImageSharpGaussian(bitmap, 1.0)
+            val bitmapp = makeImageSharpGaussian(bitmap)
+            vm.findTextInBitmap(bitmapp)
             val fdelete = vm.getFilePath(uri, requireContext())?.let { File(it) }
             if (fdelete!!.exists()) {
                 if (fdelete.delete()) {
