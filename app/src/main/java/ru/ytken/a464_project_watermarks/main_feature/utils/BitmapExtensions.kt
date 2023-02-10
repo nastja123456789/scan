@@ -1,11 +1,19 @@
 package ru.ytken.a464_project_watermarks.main_feature.utils
 
+import android.content.Context
 import android.graphics.*
+import android.renderscript.Allocation
+import android.renderscript.RenderScript
+import android.renderscript.Element
+import android.renderscript.ScriptIntrinsicConvolve3x3
+import androidx.constraintlayout.utils.widget.ImageFilterButton
+import androidx.constraintlayout.utils.widget.ImageFilterView
 import org.opencv.android.Utils
 import org.opencv.core.Core.addWeighted
 import org.opencv.core.Mat
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc.*
+import java.util.Collections.copy
 
 
 object BitmapExtensions {
@@ -29,34 +37,54 @@ object BitmapExtensions {
         return bmpGrayscale
     }
 
-    fun makeImageSharpGaussian(srcBitmap: Bitmap): Bitmap {
-        val src = Mat()
-        Utils.bitmapToMat(srcBitmap, src)
-        val dest = Mat(src.rows(), src.cols(), src.type())
-        GaussianBlur(src, dest, Size(0.0,0.0), 10.0)
-        addWeighted(src, 1.5, dest, -0.5, 0.0, dest)
-        val sharpBitmap = Bitmap.createBitmap(dest.cols(), dest.rows(), Bitmap.Config.ARGB_8888)
-        Utils.matToBitmap(dest, sharpBitmap)
-        return sharpBitmap
-//        val sigma = 1.0
-//        val amount = 1.0
-//        val blurry = Mat()
-//        val sharp = Mat()
-//        Utils.bitmapToMat(srcBitmap, sharp)
-//        val srcMat = Mat()
-//        Utils.bitmapToMat(srcBitmap, srcMat)
-//        GaussianBlur(srcMat, blurry, Size(), sigma)
-//        addWeighted(srcMat, 1 + amount, blurry, -amount, 0.0, sharp)
-//        val sharpBitmap = Bitmap.createBitmap(sharp.cols(), sharp.rows(), Bitmap.Config.ARGB_8888)
-//        Utils.matToBitmap(sharp, sharpBitmap)
+    fun makeImageSharpGaussian(srcBitmap: Bitmap, context: Context): Bitmap {
+        val sharp = floatArrayOf(
+            -0.60f, -0.60f, -0.60f,
+            -0.60f, 5.81f, -0.60f,
+            -0.60f, -0.60f, -0.60f
+        )
+
+        val sharp2 = floatArrayOf(
+            0f, -1f, 0f,
+            -1f, 5f, -1f,
+            0f, -1f, 0f
+        )
+
+        val sharp3 = floatArrayOf(
+            -0.15f, -0.15f, -0.15f,
+            -0.15f, 2.2f, -0.15f,
+            -0.15f, -0.15f, -0.15f
+        )
+
+        val bit = srcBitmap.applySharpen(sharp, context)
+        return bit
+//        val src = Mat()
+//        Utils.bitmapToMat(srcBitmap, src)
+//        val dest = Mat(src.rows(), src.cols(), src.type())
+//        GaussianBlur(src, dest, Size(0.0,0.0), 10.0)
+//        addWeighted(src, 1.5, dest, -0.5, 0.0, dest)
+//        val sharpBitmap = Bitmap.createBitmap(dest.cols(), dest.rows(), Bitmap.Config.ARGB_8888)
+//        Utils.matToBitmap(dest, sharpBitmap)
 //        return sharpBitmap
-//          val sharpBitmap: Bitmap
-//          val srcMat = Mat()
-//          Utils.bitmapToMat(srcBitmap, srcMat)
-//          val destMat = Mat()
-//          GaussianBlur(srcMat, destMat, Size(3.00,3.00), sigmaX)
-//          sharpBitmap = Bitmap.createBitmap(destMat.cols(), destMat.rows(), Bitmap.Config.ARGB_8888)
-//          Utils.matToBitmap(destMat, sharpBitmap)
-//          return sharpBitmap
+    }
+
+    fun Bitmap.applySharpen(
+        radius: FloatArray, context: Context
+    ): Bitmap {
+        val bitmap = copy(config,true)
+        RenderScript.create(context).apply {
+            val input = Allocation.createFromBitmap(this,this@applySharpen)
+            val output = Allocation.createFromBitmap(this, this@applySharpen)
+
+            ScriptIntrinsicConvolve3x3.create(
+                this, Element.U8_4(this)).apply {
+                setInput(input)
+                setCoefficients(radius)
+                forEach(output)
+            }
+            output.copyTo(bitmap)
+            destroy()
+        }
+        return bitmap
     }
 }

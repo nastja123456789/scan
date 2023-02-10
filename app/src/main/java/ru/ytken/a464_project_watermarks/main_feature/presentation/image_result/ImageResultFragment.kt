@@ -34,7 +34,7 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
             )
             val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
 //            val bitmapp = makeImageSharpGaussian(bitmap, 1.0)
-            val bitmapp = makeImageSharpGaussian(bitmap)
+            val bitmapp = makeImageSharpGaussian(bitmap, requireContext())
             vm.findTextInBitmap(bitmapp)
             val fdelete = vm.getFilePath(uri, requireContext())?.let { File(it) }
             if (fdelete!!.exists()) {
