@@ -98,7 +98,6 @@ class ImageResultFragmentViewModel: ViewModel() {
 
                                 liveInitImage.value = maxBitmap
                                 liveHighlightedImage.value = mutableImageBitmap
-
                             } }
                 }
         }

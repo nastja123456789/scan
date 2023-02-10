@@ -4,21 +4,22 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_image_result.*
-import kotlinx.android.synthetic.main.fragment_scan_result.*
 import ru.ytken.a464_project_watermarks.R
 import ru.ytken.a464_project_watermarks.main_feature.domain.use_cases.SavedImageFactoryUseCase
 import ru.ytken.a464_project_watermarks.main_feature.utils.BitmapExtensions.makeImageSharpGaussian
-
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
+
 
 class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
     private val vm: ImageResultFragmentViewModel by viewModels {
@@ -60,12 +61,6 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
                 bundleOf("uri" to uri.toString())
             )
             val arr = vm.lineBounds
-//            for (i in arr) {
-//                vm.intervalLineBounds.add(i)
-//            }
-//            for (i in 0 until vm.intervalLineBounds.size-1){
-//                Log.d("${vm.intervalLineBounds[i+1] - vm.intervalLineBounds[i]}","nonono")
-//            }
             setFragmentResult(
                 "arrayList",
                 bundleOf( "array" to arr.toString())
