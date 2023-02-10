@@ -33,6 +33,20 @@
         <action
             android:id="@+id/action_photoCropFragment_to_imageResultFragment"
             app:destination="@id/imageResultFragment" />
+        <action
+            android:id="@+id/action_photoCropFragment_to_improveClarifyFragment"
+            app:destination="@id/improveClarifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/improveClarifyFragment"
+        android:name="ru.ytken.a464_project_watermarks.main_feature.presentation.improve_clarity.ImproveClarityFragment"
+        android:label="ImproveClarifyFragment"
+        tools:layout="@layout/fragment_improve_clarity"
+        >
+
+        <action
+            android:id="@+id/action_improveClarifyFragment_to_imageResultFragment"
+            app:destination="@id/imageResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeScanFragment"

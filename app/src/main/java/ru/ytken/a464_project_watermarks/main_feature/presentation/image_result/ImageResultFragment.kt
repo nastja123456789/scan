@@ -34,9 +34,22 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
                 str
             )
             val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
-//            val bitmapp = makeImageSharpGaussian(bitmap, 1.0)
-            val bitmapp = makeImageSharpGaussian(bitmap, requireContext())
-            vm.findTextInBitmap(bitmapp)
+            vm.findTextInBitmap(bitmap)
+            val fdelete = vm.getFilePath(uri, requireContext())?.let { File(it) }
+            if (fdelete!!.exists()) {
+                if (fdelete.delete()) {
+                } else {
+                }
+            }
+        }
+        setFragmentResultListener("fromClarityToImage") {
+                _, bun ->
+            val str = bun.getString("uri")
+            val uri = Uri.parse(
+                str
+            )
+            val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+            vm.findTextInBitmap(bitmap)
             val fdelete = vm.getFilePath(uri, requireContext())?.let { File(it) }
             if (fdelete!!.exists()) {
                 if (fdelete.delete()) {

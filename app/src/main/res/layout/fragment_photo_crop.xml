@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/light_blue"
     android:layout_height="match_parent"
@@ -21,6 +20,32 @@
             android:orientation="vertical"
             android:weightSum="10">
 
+            <LinearLayout
+                android:id="@+id/buttonsTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <Button
+                    android:id="@+id/btnImageLeft"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Влево" />
+
+                <Button
+                    android:id="@+id/btnImageRight"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Вправо" />
+
+            </LinearLayout>
+
             <com.labters.documentscanner.DocumentScannerView
                 android:id="@+id/document_scanner"
                 android:layout_width="match_parent"
@@ -29,15 +54,29 @@
                 android:layout_margin="10dp"
                 android:layout_weight="10" />
 
+            <LinearLayout
+                android:id="@+id/buttonsBottoms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
             <Button
                 android:id="@+id/btnImageCrop"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:text="Crop Image" />
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Обрезать" />
+            <Button
+                android:id="@+id/btnImageClarity"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Увеличить четкость" />
+        </LinearLayout>
         </LinearLayout>
 
         <ImageView
@@ -56,47 +95,3 @@
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".main_feature.presentation.photo_crop.PhotoCropFragment">-->
-
-<!--    <ImageButton-->
-<!--        android:id="@+id/imageButtonCloseCrop"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:elevation="2dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:srcCompat="@android:drawable/btn_dialog" />-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/buttons"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_centerHorizontal="true">-->
-
-<!--        <Button-->
-<!--            android:id="@+id/cropButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Обрезать/Повернуть"-->
-<!--            android:layout_marginHorizontal="10dp"/>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/saveButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Сохранить" />-->
-<!--    </LinearLayout>-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/resultImageView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:visibility="visible"/>-->
-
-<!--</RelativeLayout>-->

@@ -19,6 +19,11 @@ object BitmapExtensions {
         return Bitmap.createBitmap(this, 0, 0, this.width, this.height, matrix, true)
     }
 
+    fun Bitmap.rotate(degrees: Float): Bitmap {
+        val matrix = Matrix().apply { postRotate(degrees) }
+        return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+    }
+
     fun Bitmap.toGrayscale(): Bitmap? {
         val height: Int = this.height
         val width: Int = this.width

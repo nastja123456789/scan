@@ -29,4 +29,6 @@
     <string name="permissionRead">Разрешение на чтение из хранилища не получено</string>
     <string name="allPermission">Разрешили использовать память для чтения, получать данные из памяти и доступ к камере</string>
     <string name="denyPermission">Зайдите в Настройки приложения и разрешите доступ!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

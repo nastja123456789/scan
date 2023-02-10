@@ -19,12 +19,6 @@ import org.opencv.core.Scalar;
 
 public class ImageUtils {
 
-    public static Bitmap rotateBitmap(Bitmap original, int angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
-    }
-
     public static Mat bitmapToMat(Bitmap bitmap) {
         Mat mat = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8U, new Scalar(4));
         Bitmap bitmap32 = bitmap.copy(Bitmap.Config.ARGB_8888, true);
