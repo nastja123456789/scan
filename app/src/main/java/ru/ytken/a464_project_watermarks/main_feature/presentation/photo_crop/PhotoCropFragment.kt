@@ -40,7 +40,7 @@ internal class PhotoCropFragment : Fragment(R.layout.fragment_photo_crop) {
                 document_scanner.setImage(bitmap)
             }
 
-            var angle1 = 0
+//            var angle1 = 0
             btnImageLeft.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
                     angle1 -= 90
@@ -49,12 +49,11 @@ internal class PhotoCropFragment : Fragment(R.layout.fragment_photo_crop) {
                 }
             }
 
-            var angle2 = 0
             btnImageRight.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    angle2 += 90
-                    document_scanner.setImage(bitmap.rotate(angle2.toFloat()))
-                    if (angle2 == 360) angle2 = 0
+                    angle1 += 90
+                    document_scanner.setImage(bitmap.rotate(angle1.toFloat()))
+                    if (angle1 == 360) angle1 = 0
                 }
             }
 
@@ -106,4 +105,8 @@ internal class PhotoCropFragment : Fragment(R.layout.fragment_photo_crop) {
         context!!.contentResolver.openInputStream(Uri.parse(file)).run {
             BitmapFactory.decodeStream(this)
         }
+
+    companion object {
+        private var angle1 = 0
+    }
 }
