@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -53,10 +54,7 @@ class SeeScanFragment: Fragment(R.layout.fragment_scan_result) {
 
         setFragmentResultListener("arrayList") {
                 _, bun ->
-            val string = bun.getString("array")
-            if (string != null) {
-                vm.lineBounds = string.filter{ it.isDigit() }.map{ it.digitToInt() } as ArrayList<Int>
-            }
+                vm.lineBounds = bun.getSerializable("array") as ArrayList<Int>
         }
 
         imageButtonNoSkan.setOnClickListener {
@@ -83,9 +81,9 @@ class SeeScanFragment: Fragment(R.layout.fragment_scan_result) {
             val watermarkSize = 24
             val resMatrix = ""
             val lineBounds = vm.lineBounds
-//            for (i in lineBounds) {
-//                Log.d("$i","iiiii")
-//            }
+            for (i in lineBounds) {
+                Log.d("$i","okioki")
+            }
             try{
                 val lineIntervals = ArrayList<Int>()
                 for (i in 1 until lineBounds.size)

@@ -86,7 +86,7 @@ class ImageResultFragmentViewModel: ViewModel() {
                                             line.boundingBox?.let {
                                                 shapeDrawable.bounds = it
                                                 lineBounds.add(it.centerY())
-                                                Log.d("${it.centerY()}","${it.centerY()} 1111111")
+                                                Log.d("adding","${it.centerY()}")
                                             }
                                             shapeDrawable.draw(canvas)
                                         }

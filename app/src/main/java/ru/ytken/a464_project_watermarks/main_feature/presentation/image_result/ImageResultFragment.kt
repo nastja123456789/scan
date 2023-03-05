@@ -3,7 +3,9 @@ package ru.ytken.a464_project_watermarks.main_feature.presentation.image_result
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -15,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_image_result.*
 import ru.ytken.a464_project_watermarks.R
 import ru.ytken.a464_project_watermarks.main_feature.domain.use_cases.SavedImageFactoryUseCase
-import ru.ytken.a464_project_watermarks.main_feature.utils.BitmapExtensions.makeImageSharpGaussian
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
@@ -74,9 +75,15 @@ class ImageResultFragment: Fragment(R.layout.fragment_image_result) {
                 bundleOf("uri" to uri.toString())
             )
             val arr = vm.lineBounds
+            for (i in vm.lineBounds) {
+                Log.d("$i","lollol")
+            }
+
+            val args: Bundle = Bundle()
+
             setFragmentResult(
                 "arrayList",
-                bundleOf( "array" to arr.toString())
+                bundleOf( "array" to arr)
             )
             findNavController().navigate(R.id.action_imageResultFragment_to_seeScanFragment)
         }
